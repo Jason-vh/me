@@ -278,6 +278,37 @@
       color: var(--ink-muted);
     }
 
+    .download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .download:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+    }
+    .download svg {
+      width: 0.9rem;
+      height: 0.9rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .header-actions {
+      margin-top: 1.5rem;
+    }
+
     a {
       color: var(--accent);
       text-decoration: none;
@@ -362,6 +393,7 @@
       }
 
       header { margin-bottom: 8mm; break-after: avoid-page; }
+      .header-actions { display: none; }
 
       h1 {
         font-size: 26pt;
@@ -475,6 +507,14 @@
         skills and full-stack development. I have experience leading and driving large,
         cross-team projects, solving dependencies, breaking silos and growing engineers.
       </p>
+      <div class="header-actions">
+        <a class="download" href="/jason-van-hattum.pdf" download>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14" />
+          </svg>
+          Download CV
+        </a>
+      </div>
     </header>
 
     <section aria-labelledby="experience">
