@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jason van Hattum — Staff Engineer</title>
-  <meta name="description" content="Jason van Hattum — Staff Engineer. Full-stack development, large cross-team initiatives, and growing engineers." />
+  <title>Jason van Hattum — Product Engineer</title>
+  <meta name="description" content="Jason van Hattum — Product Engineer. Full-stack development, large cross-team initiatives, and growing engineers." />
   <meta name="theme-color" content="#fbf7f2" />
 
-  <meta property="og:title" content="Jason van Hattum — Staff Engineer" />
+  <meta property="og:title" content="Jason van Hattum — Product Engineer" />
   <meta property="og:description" content="Full-stack development, large cross-team initiatives, and growing engineers." />
   <meta property="og:type" content="profile" />
 
@@ -112,10 +112,9 @@
       font-variation-settings: 'opsz' 144;
     }
 
-    h1 em {
-      font-style: italic;
+    h1 .last {
       color: var(--accent);
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .intro {
@@ -133,8 +132,6 @@
       text-transform: uppercase;
       color: var(--ink-muted);
       margin-bottom: 2rem;
-      font-style: italic;
-      font-variation-settings: 'opsz' 9;
     }
 
     section {
@@ -144,7 +141,6 @@
     .role {
       padding: 1.75rem 0;
       border-top: 1px solid var(--rule);
-      transition: padding 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .role:last-of-type {
@@ -171,7 +167,6 @@
     .role-title .at {
       color: var(--ink-muted);
       font-weight: 400;
-      font-style: italic;
     }
 
     .role-title .company {
@@ -183,7 +178,6 @@
       color: var(--ink-muted);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      font-style: italic;
       font-family: 'Fraunces', Georgia, serif;
     }
 
@@ -215,11 +209,6 @@
       width: 0.55rem;
       height: 1px;
       background: var(--accent);
-      transition: width 0.25s ease;
-    }
-
-    .role:hover .bullets li::before {
-      width: 0.85rem;
     }
 
     .tools {
@@ -261,21 +250,7 @@
       font-size: 0.85rem;
       color: var(--ink-muted);
       font-variant-numeric: tabular-nums;
-      font-style: italic;
       font-family: 'Fraunces', Georgia, serif;
-    }
-
-    footer {
-      margin-top: clamp(3rem, 7vw, 5rem);
-      padding-top: 2rem;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: var(--ink-muted);
     }
 
     .download {
@@ -288,7 +263,6 @@
       border: 1px solid var(--rule);
       border-radius: 999px;
       color: var(--ink-soft);
-      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
     }
     .download:hover {
       color: var(--accent);
@@ -313,7 +287,6 @@
       color: var(--accent);
       text-decoration: none;
       border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease, color 0.2s ease;
     }
 
     a:hover {
@@ -327,24 +300,6 @@
       flex-wrap: wrap;
     }
 
-    /* fade in on load */
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    main > * { animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-    main > *:nth-child(1) { animation-delay: 0.05s; }
-    main > *:nth-child(2) { animation-delay: 0.15s; }
-    main > *:nth-child(3) { animation-delay: 0.25s; }
-    main > *:nth-child(4) { animation-delay: 0.3s; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
 
     @media (max-width: 540px) {
       .role-head {
@@ -375,10 +330,6 @@
       }
 
       *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-        opacity: 1 !important;
-        transform: none !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -400,7 +351,7 @@
         margin-bottom: 2mm;
         line-height: 1;
       }
-      h1 em { color: var(--accent); }
+      h1 .last { color: var(--accent); }
 
       .eyebrow {
         font-size: 8.5pt;
@@ -483,14 +434,6 @@
       .education-degree .school { color: var(--accent); }
       .education-dates { font-size: 9pt; }
 
-      footer {
-        margin-top: 6mm;
-        padding-top: 3mm;
-        font-size: 9pt;
-        color: var(--ink-muted);
-      }
-      footer a { color: var(--accent); }
-
       a { text-decoration: none; border: 0; }
     }
   </style>
@@ -500,8 +443,8 @@
 
   <main>
     <header>
-      <div class="eyebrow">Staff Engineer</div>
-      <h1>Jason <em>van Hattum</em></h1>
+      <div class="eyebrow">Product Engineer</div>
+      <h1>Jason <span class="last">van Hattum</span></h1>
       <p class="intro">
         I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
         skills and full-stack development. I have experience leading and driving large,
@@ -523,7 +466,7 @@
       <article class="role">
         <div class="role-head">
           <div class="role-title">
-            Staff Engineer <span class="at">at</span> <span class="company">Sendcloud</span>
+            Product Engineer <span class="at">at</span> <span class="company">Sendcloud</span>
           </div>
           <div class="role-dates">
             Aug 2024 — present
@@ -612,18 +555,12 @@
       <h2 id="education">Education</h2>
       <div class="education-item">
         <div class="education-degree">
-          BSc. (Hons) Computer Science <span class="at" style="color: var(--ink-muted); font-style: italic; font-weight: 400;">·</span> <span class="school">University of Pretoria</span>
+          BSc. (Hons) Computer Science <span class="at" style="color: var(--ink-muted); font-weight: 400;">·</span> <span class="school">University of Pretoria</span>
         </div>
         <div class="education-dates">2015 — 2018</div>
       </div>
     </section>
 
-    <footer>
-      <div>© Jason van Hattum</div>
-      <div class="contact">
-        <a href="mailto:jason@vanhattum.xyz">jason@vanhattum.xyz</a>
-      </div>
-    </footer>
   </main>
 </body>
 </html>

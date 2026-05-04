@@ -7,13 +7,13 @@
 #let rule = rgb("#c8c8c8")
 
 #set document(
-  title: "Jason van Hattum — Staff Engineer",
+  title: "Jason van Hattum — Product Engineer",
   author: "Jason van Hattum",
 )
 
 #set page(
   paper: "a4",
-  margin: (top: 14mm, bottom: 14mm, left: 16mm, right: 16mm),
+  margin: (top: 16mm, bottom: 16mm, left: 18mm, right: 18mm),
 )
 
 #set text(
@@ -23,18 +23,13 @@
   lang: "en",
 )
 
-#set par(leading: 0.55em, justify: false)
+#set par(leading: 0.6em, justify: false)
 
 // ---------- helpers ----------
 
-#let serif(weight: "regular", style: "normal", size: none, fill: auto, body) = {
-  set text(font: "Fraunces", weight: weight, style: style)
-  if size != none { set text(size: size); body } else { body }
-}
-
 #let eyebrow(label) = {
   set text(font: "Inter", size: 8.5pt, weight: "medium", fill: accent, tracking: 1.4pt)
-  block(below: 3mm)[
+  block(below: 4mm)[
     #box(width: 6mm, baseline: -3pt)[#line(length: 100%, stroke: 0.7pt + accent)]
     #h(1.5mm)
     #upper(label)
@@ -43,38 +38,38 @@
 
 #let display-name(first, last) = {
   set text(font: "Fraunces", size: 26pt, weight: "semibold", fill: ink)
-  block(below: 3mm, above: 0pt)[
-    #first #h(0.15em) #text(style: "italic", weight: "medium", fill: accent)[#last]
+  block(below: 4mm, above: 0pt)[
+    #first #h(0.18em) #text(fill: accent)[#last]
   ]
 }
 
 #let intro(body) = {
   set text(font: "Inter", size: 10pt, fill: ink-soft)
-  set par(leading: 0.5em)
-  block(below: 8mm)[#body]
+  set par(leading: 0.55em)
+  block(below: 9mm)[#body]
 }
 
 #let section-heading(label) = {
-  set text(font: "Fraunces", size: 9pt, style: "italic", weight: "regular", fill: ink-muted, tracking: 1.6pt)
-  block(above: 6mm, below: 3mm)[#upper(label)]
+  set text(font: "Fraunces", size: 9pt, weight: "regular", fill: ink-muted, tracking: 1.6pt)
+  block(above: 6mm, below: 4mm)[#upper(label)]
 }
 
 #let role-line(title, company, dates, sub: none) = {
-  block(below: 1.5mm)[
+  block(below: 2.5mm)[
     #grid(
       columns: (1fr, auto),
       column-gutter: 6mm,
       align: (left + top, right + top),
       [
         #text(font: "Fraunces", size: 11pt, weight: "semibold")[#title]
-        #text(font: "Fraunces", size: 11pt, style: "italic", weight: "regular", fill: ink-muted)[ at ]
+        #text(font: "Fraunces", size: 11pt, weight: "regular", fill: ink-muted)[ at ]
         #text(font: "Fraunces", size: 11pt, weight: "semibold", fill: accent)[#company]
       ],
       [
-        #text(font: "Fraunces", size: 9pt, style: "italic", fill: ink-muted)[#dates]
+        #text(font: "Fraunces", size: 9pt, fill: ink-muted)[#dates]
         #if sub != none [
-          #linebreak()
-          #text(font: "Fraunces", size: 8pt, style: "italic", fill: ink-muted)[#sub]
+          #parbreak()
+          #text(font: "Fraunces", size: 8.5pt, fill: ink-muted)[#sub]
         ]
       ],
     )
@@ -82,12 +77,12 @@
 }
 
 #let bullet(body) = {
-  block(below: 1mm)[
+  block(below: 1.5mm)[
     #grid(
       columns: (4mm, 1fr),
       align: (left + top, left + top),
       [
-        #v(0.45em)
+        #v(0.5em)
         #box(width: 2mm)[#line(length: 100%, stroke: 0.9pt + accent)]
       ],
       text(size: 10pt, fill: ink-soft)[#body],
@@ -96,10 +91,10 @@
 }
 
 #let tools(items) = {
-  v(2mm)
+  v(2.5mm)
   block[
     #line(length: 100%, stroke: (paint: rule, thickness: 0.5pt, dash: "dashed"))
-    #v(1.5mm, weak: true)
+    #v(2mm, weak: true)
     #set text(size: 8.75pt, fill: ink-muted)
     #text(weight: "semibold", fill: ink)[Tools & technologies]
     #h(1.5mm) · #h(1.5mm)
@@ -108,7 +103,7 @@
 }
 
 #let role(title, company, dates, sub: none, bullets: (), tech: none) = {
-  block(breakable: false, below: 4mm, above: 1mm)[
+  block(breakable: false, below: 5mm, above: 1mm)[
     #role-line(title, company, dates, sub: sub)
     #v(1mm, weak: true)
     #for b in bullets [#bullet(b)]
@@ -127,14 +122,14 @@
         #text(font: "Fraunces", size: 10.5pt, fill: ink-muted)[ · ]
         #text(font: "Fraunces", size: 10.5pt, weight: "medium", fill: accent)[#school]
       ],
-      text(font: "Fraunces", size: 9pt, style: "italic", fill: ink-muted)[#dates],
+      text(font: "Fraunces", size: 9pt, fill: ink-muted)[#dates],
     )
   ]
 }
 
 // ---------- content ----------
 
-#eyebrow("Staff Engineer")
+#eyebrow("Product Engineer")
 #display-name[Jason][van Hattum]
 #intro[
   I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
@@ -145,7 +140,7 @@
 #section-heading("Work Experience")
 
 #role(
-  "Staff Engineer",
+  "Product Engineer",
   "Sendcloud",
   "Aug 2024 — present",
   sub: "Software Engineer · Aug 2022 — Aug 2024",
@@ -209,20 +204,4 @@
   "BSc. (Hons) Computer Science",
   "University of Pretoria",
   "2015 — 2018",
-)
-
-// footer
-#place(
-  bottom + center,
-  dy: 6mm,
-  block(width: 100%)[
-    #line(length: 100%, stroke: 0.5pt + rule)
-    #v(2.5mm, weak: true)
-    #grid(
-      columns: (1fr, auto),
-      align: (left + horizon, right + horizon),
-      text(size: 9pt, fill: ink-muted)[© Jason van Hattum],
-      text(size: 9pt, fill: accent)[#link("mailto:jason@vanhattum.xyz")[jason\@vanhattum.xyz]],
-    )
-  ],
 )
