@@ -1,156 +1,120 @@
 // Compile with: typst compile --font-path fonts resume.typ jason-van-hattum.pdf
 
-#let accent = rgb("#c4421e")
-#let ink = rgb("#111111")
-#let ink-soft = rgb("#2a2a2a")
-#let ink-muted = rgb("#666666")
-#let rule = rgb("#c8c8c8")
+#let accent = rgb("#e8552b")
+#let ink = rgb("#1a1714")
+#let rule = rgb("#bbbbbb")
 
 #set document(
-  title: "Jason van Hattum — Product Engineer",
+  title: "Jason van Hattum - Resume",
   author: "Jason van Hattum",
 )
 
 #set page(
   paper: "a4",
-  margin: (top: 16mm, bottom: 16mm, left: 18mm, right: 18mm),
+  margin: (top: 18mm, bottom: 18mm, left: 20mm, right: 20mm),
 )
 
 #set text(
   font: "Inter",
-  size: 10.25pt,
+  size: 11pt,
   fill: ink,
   lang: "en",
 )
 
 #set par(leading: 0.6em, justify: false)
 
-// ---------- helpers ----------
+#let bullet-mark = text(fill: ink, size: 9pt)[❖]
 
-#let eyebrow(label) = {
-  set text(font: "Inter", size: 8.5pt, weight: "medium", fill: accent, tracking: 1.4pt)
-  block(below: 4mm)[
-    #box(width: 6mm, baseline: -3pt)[#line(length: 100%, stroke: 0.7pt + accent)]
-    #h(1.5mm)
-    #upper(label)
+#let title(name) = {
+  align(center)[
+    #text(font: "Inter", size: 20pt, weight: "bold", fill: accent)[#name]
   ]
-}
-
-#let display-name(first, last) = {
-  set text(font: "Fraunces", size: 26pt, weight: "semibold", fill: ink)
-  block(below: 4mm, above: 0pt)[
-    #first #h(0.18em) #text(fill: accent)[#last]
-  ]
+  v(2mm)
 }
 
 #let intro(body) = {
-  set text(font: "Inter", size: 10pt, fill: ink-soft)
-  set par(leading: 0.55em)
-  block(below: 9mm)[#body]
+  block(below: 6mm)[#body]
 }
 
 #let section-heading(label) = {
-  set text(font: "Fraunces", size: 9pt, weight: "regular", fill: ink-muted, tracking: 1.6pt)
-  block(above: 6mm, below: 4mm)[#upper(label)]
-}
-
-#let role-line(title, company, dates, sub: none) = {
-  block(below: 2.5mm)[
-    #grid(
-      columns: (1fr, auto),
-      column-gutter: 6mm,
-      align: (left + top, right + top),
-      [
-        #text(font: "Fraunces", size: 11pt, weight: "semibold")[#title]
-        #text(font: "Fraunces", size: 11pt, weight: "regular", fill: ink-muted)[ at ]
-        #text(font: "Fraunces", size: 11pt, weight: "semibold", fill: accent)[#company]
-      ],
-      [
-        #text(font: "Fraunces", size: 9pt, fill: ink-muted)[#dates]
-        #if sub != none [
-          #parbreak()
-          #text(font: "Fraunces", size: 8.5pt, fill: ink-muted)[#sub]
-        ]
-      ],
-    )
+  v(3mm)
+  align(center)[
+    #text(font: "Inter", size: 14pt, weight: "bold", fill: accent)[#label]
   ]
+  v(2mm)
 }
 
-#let bullet(body) = {
-  block(below: 1.5mm)[
+#let role(titles, company, dates, bullets: (), tech: none) = {
+  // titles and dates can be a string OR an array (for stacked rows like Sendcloud)
+  let title-content = if type(titles) == array {
+    stack(spacing: 1mm, ..titles.map(t => text(weight: "bold", size: 11pt)[#t]))
+  } else {
+    text(weight: "bold", size: 11pt)[#titles]
+  }
+  let date-content = if type(dates) == array {
+    stack(spacing: 1mm, ..dates.map(d => text(style: "italic", size: 10pt)[#d]))
+  } else {
+    text(style: "italic", size: 10pt)[#dates]
+  }
+
+  block(breakable: false)[
     #grid(
-      columns: (4mm, 1fr),
-      align: (left + top, left + top),
-      [
-        #v(0.5em)
-        #box(width: 2mm)[#line(length: 100%, stroke: 0.9pt + accent)]
-      ],
-      text(size: 10pt, fill: ink-soft)[#body],
+      columns: (1fr, 1fr, 1fr),
+      align: (left + horizon, center + horizon, right + horizon),
+      title-content,
+      text(weight: "bold", size: 11pt)[#company],
+      date-content,
     )
-  ]
-}
-
-#let tools(items) = {
-  v(2.5mm)
-  block[
-    #line(length: 100%, stroke: (paint: rule, thickness: 0.5pt, dash: "dashed"))
+    #v(1.5mm, weak: true)
+    #line(length: 100%, stroke: 0.5pt + rule)
     #v(2mm, weak: true)
-    #set text(size: 8.75pt, fill: ink-muted)
-    #text(weight: "semibold", fill: ink)[Tools & technologies]
-    #h(1.5mm) · #h(1.5mm)
-    #items
+    #for b in bullets [
+      #grid(
+        columns: (5mm, 1fr),
+        align: (left + top, left + top),
+        [#v(0.1em) #bullet-mark],
+        [#b],
+      )
+      #v(1mm, weak: true)
+    ]
+    #if tech != none [
+      #v(1mm, weak: true)
+      #par[*Tools & technologies*: #tech]
+    ]
   ]
+  v(5mm)
 }
 
-#let role(title, company, dates, sub: none, bullets: (), tech: none) = {
-  block(breakable: false, below: 5mm, above: 1mm)[
-    #role-line(title, company, dates, sub: sub)
-    #v(1mm, weak: true)
-    #for b in bullets [#bullet(b)]
-    #if tech != none [#tools(tech)]
-  ]
-}
-
-#let education-item(degree, school, dates) = {
-  block(below: 2mm)[
-    #grid(
-      columns: (1fr, auto),
-      column-gutter: 4mm,
-      align: (left + bottom, right + bottom),
-      [
-        #text(font: "Fraunces", size: 10.5pt, weight: "medium")[#degree]
-        #text(font: "Fraunces", size: 10.5pt, fill: ink-muted)[ · ]
-        #text(font: "Fraunces", size: 10.5pt, weight: "medium", fill: accent)[#school]
-      ],
-      text(font: "Fraunces", size: 9pt, fill: ink-muted)[#dates],
-    )
-  ]
+#let education-item(body) = {
+  grid(
+    columns: (5mm, 1fr),
+    align: (left + top, left + top),
+    [#v(0.1em) #bullet-mark],
+    [#body],
+  )
 }
 
 // ---------- content ----------
 
-#eyebrow("Product Engineer")
-#display-name[Jason][van Hattum]
+#title("Jason van Hattum")
+
 #intro[
-  I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
-  skills and full-stack development. I have experience leading and driving large,
-  cross-team projects, solving dependencies, breaking silos and growing engineers.
+  Hi! I'm a highly motivated, outcome-driven engineer with a healthy balance of soft skills and full-stack development. I have experience leading and driving large, cross-team projects, solving dependencies, breaking silos and growing engineers.
 ]
 
 #section-heading("Work Experience")
 
 #role(
-  "Product Engineer",
+  ("Staff Engineer", "Software Engineer"),
   "Sendcloud",
-  "Aug 2024 — present",
-  sub: "Software Engineer · Aug 2022 — Aug 2024",
+  ("Aug 2024 - present", "Aug 2022 - Aug 2024"),
   bullets: (
     [Led a 200k+ LOC migration to TypeScript across 14 teams, introducing tooling, mentoring engineers and securing stakeholder buy-in.],
     [Planned and initiated the move from Elasticsearch to InfluxDB for 10+ years of analytics data, reducing costs and centralising expertise.],
-    [Designed and implemented a recommendations engine using a decade of data to help users save costs and improve satisfaction — coordinating amongst multiple feature teams and data engineers.],
-    [Introduced regular backend chapter meetings, fostering collaboration among 50+ engineers and contributing to improvements in the ADR process, event-bus architecture, API design, and product alignment.],
+    [Designed and implemented a recommendations engine using a decade of data to help users save costs and improve satisfaction, coordinating amongst multiple feature teams and data engineers.],
+    [Introduced regular backend chapter meetings, fostering collaboration among 50+ engineers and contributing to (amongst others) improvements in the ADR process, event-bus architecture, API design, and product alignment.],
     [Redesigned the frontend hiring process, creating new technical assessments and interview questions while conducting numerous interviews.],
-    [Provided technical leadership for a number of projects — designing solutions, aligning stakeholders, managing dependencies and shipping code.],
+    [Provided technical leadership for a number of projects, designing solutions, aligning stakeholders, managing dependencies and shipping code.],
     [Took operational ownership of relevant incidents: resolving the incident, communicating with stakeholders, writing the post-mortem and driving follow-ups.],
     [Collaborated with product managers, designers and other engineers to design and develop user-facing features.],
     [Resolved bugs and provided support on both the frontend and backend.],
@@ -162,7 +126,7 @@
 #role(
   "Full-Stack Software Engineer",
   "AXXS",
-  "Jan 2022 — Jul 2022",
+  "Jan 2022 - Jul 2022",
   bullets: (
     [Designed and implemented features in a 200+ microservice architecture.],
   ),
@@ -172,7 +136,7 @@
 #role(
   "Senior Software Engineer",
   "EPI-USE",
-  "Mar 2021 — Dec 2021",
+  "Mar 2021 - Dec 2021",
   bullets: (
     [Extended and maintained the component library used by over 100 engineers at MTN, Africa's largest telecom.],
   ),
@@ -182,17 +146,17 @@
 #role(
   "Founder & Software Engineer",
   "Verbatic",
-  "2019 — 2021",
+  "2019 - 2021",
   bullets: (
     [Designed and executed greenfield projects end-to-end across a diverse set of technologies while managing clients.],
   ),
-  tech: [Java, Angular, C\#, Docker, Firebase, GitLab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind],
+  tech: [Java, Angular, C\#, Docker, Firebase, Gitlab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind],
 )
 
 #role(
   "Software Engineer",
   "Compiax",
-  "2016 — 2019",
+  "2016 - 2019",
   bullets: (
     [Designed and implemented projects across multiple domains and technologies.],
   ),
@@ -200,8 +164,4 @@
 )
 
 #section-heading("Education")
-#education-item(
-  "BSc. (Hons) Computer Science",
-  "University of Pretoria",
-  "2015 — 2018",
-)
+#education-item[BSc. (Hons) Computer Science, University of Pretoria, 2015 - 2018]
