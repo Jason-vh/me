@@ -30,7 +30,7 @@
 #let eyebrow(label) = {
   set text(size: 8.25pt, weight: "medium", fill: accent, tracking: 1.4pt)
   block(below: 4mm)[
-    #box(width: 1.4mm, height: 1.4mm, fill: accent, radius: 0.7mm)
+    #box(width: 1.4mm, height: 1.4mm, baseline: -1pt, fill: accent, radius: 0.7mm)
     #h(2mm)
     #upper(label)
   ]
