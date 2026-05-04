@@ -19,28 +19,16 @@
 
   <style>
     :root {
-      --bg: #fbf7f2;
-      --bg-soft: #f4ede2;
-      --ink: #1a1714;
-      --ink-soft: #4a4137;
-      --ink-muted: #897f72;
-      --rule: #e7dfd1;
+      color-scheme: dark;
+      --bg: #14110e;
+      --bg-soft: #1d1915;
+      --ink: #ebe5dc;
+      --ink-soft: #b8aea0;
+      --ink-muted: #6e6760;
+      --rule: #2a2520;
       --accent: #e8552b;
-      --accent-deep: #c4421e;
-      --max: 760px;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #14110e;
-        --bg-soft: #1d1915;
-        --ink: #f1ebe0;
-        --ink-soft: #c5bdaf;
-        --ink-muted: #8a8174;
-        --rule: #2a2520;
-        --accent: #ff6a3d;
-        --accent-deep: #ff8758;
-      }
+      --accent-deep: #ff6a3d;
+      --max: 680px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,12 +52,9 @@
       inset: 0;
       pointer-events: none;
       z-index: 100;
-      opacity: 0.4;
-      mix-blend-mode: multiply;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-    @media (prefers-color-scheme: dark) {
-      .grain { mix-blend-mode: screen; opacity: 0.25; }
+      opacity: 0.18;
+      mix-blend-mode: screen;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     main {
@@ -96,17 +81,18 @@
 
     .eyebrow::before {
       content: '';
-      width: 1.5rem;
-      height: 1px;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
       background: var(--accent);
     }
 
     h1 {
       font-family: 'Fraunces', Georgia, serif;
       font-weight: 600;
-      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
       line-height: 1.05;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       color: var(--ink);
       margin-bottom: 1.5rem;
       font-variation-settings: 'opsz' 144;
@@ -125,13 +111,36 @@
     }
 
     h2 {
-      font-family: 'Fraunces', Georgia, serif;
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: center;
+      gap: 1.25rem;
+      font-family: 'Inter', sans-serif;
       font-weight: 500;
-      font-size: 0.85rem;
-      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: 2rem;
+      color: var(--ink-soft);
+      margin-bottom: 2.5rem;
+    }
+
+    h2::before {
+      content: attr(data-num);
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0;
+      color: var(--accent);
+      text-transform: none;
+      font-weight: 400;
+    }
+
+    h2::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: var(--rule);
+      width: 100%;
     }
 
     section {
@@ -256,18 +265,19 @@
     .download {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
       font-size: 0.85rem;
       font-weight: 500;
-      padding: 0.4rem 0.85rem;
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      color: var(--ink-soft);
+      padding: 0.55rem 1rem;
+      border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
     }
     .download:hover {
       color: var(--accent);
       border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 6%, transparent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
     }
     .download svg {
       width: 0.9rem;
@@ -280,7 +290,38 @@
     }
 
     .header-actions {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.25rem;
+      margin-top: 1.75rem;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+
+    .contact > * {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .contact > *::before {
+      content: '·';
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .contact a {
+      color: var(--ink-soft);
+      border-bottom: 1px dotted transparent;
+    }
+
+    .contact a:hover {
+      color: var(--ink);
+      border-bottom-color: var(--ink-muted);
     }
 
     a {
@@ -450,6 +491,12 @@
         skills and full-stack development. I have experience leading and driving large,
         cross-team projects, solving dependencies, breaking silos and growing engineers.
       </p>
+      <div class="contact">
+        <a href="mailto:jason@vanhattum.xyz">jason@vanhattum.xyz</a>
+        <a href="https://www.linkedin.com/in/jasonvanhattum/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/Jason-vh" target="_blank" rel="noopener">GitHub</a>
+        <span>Netherlands</span>
+      </div>
       <div class="header-actions">
         <a class="download" href="/jason-van-hattum.pdf" download>
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -461,7 +508,7 @@
     </header>
 
     <section aria-labelledby="experience">
-      <h2 id="experience">Work Experience</h2>
+      <h2 id="experience" data-num="01">Work Experience</h2>
 
       <article class="role">
         <div class="role-head">
@@ -486,7 +533,7 @@
           <li>Mentored, challenged and advocated for engineers across all disciplines, reviewed code, and collaborated with solution design.</li>
         </ul>
         <div class="tools">
-          <span class="tools-label">Tools &amp; technologies</span> · Python, Django, FastAPI, Vue, TypeScript, JavaScript, Vite, Kubernetes, AWS, Docker, GitLab, Terraform, Postgres, Elasticsearch, Figma, DDD
+          <span class="tools-label">Tools</span> · Python, Django, FastAPI, Vue, TypeScript, JavaScript, Vite, Kubernetes, AWS, Docker, GitLab, Terraform, Postgres, Elasticsearch, Figma, DDD
         </div>
       </article>
 
@@ -501,7 +548,7 @@
           <li>Designed and implemented features in a 200+ microservice architecture.</li>
         </ul>
         <div class="tools">
-          <span class="tools-label">Tools &amp; technologies</span> · Java, PHP, JavaScript, Node, AWS, Kafka, Postgres, Vue, HTML, CSS
+          <span class="tools-label">Tools</span> · Java, PHP, JavaScript, Node, AWS, Kafka, Postgres, Vue, HTML, CSS
         </div>
       </article>
 
@@ -516,7 +563,7 @@
           <li>Extended and maintained the component library used by over 100 engineers at MTN, Africa's largest telecom.</li>
         </ul>
         <div class="tools">
-          <span class="tools-label">Tools &amp; technologies</span> · Angular, TypeScript, Docker, GitLab, Bootstrap, HTML, CSS
+          <span class="tools-label">Tools</span> · Angular, TypeScript, Docker, GitLab, Bootstrap, HTML, CSS
         </div>
       </article>
 
@@ -531,7 +578,7 @@
           <li>Designed and executed greenfield projects end-to-end across a diverse set of technologies while managing clients.</li>
         </ul>
         <div class="tools">
-          <span class="tools-label">Tools &amp; technologies</span> · Java, Angular, C#, Docker, Firebase, GitLab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind
+          <span class="tools-label">Tools</span> · Java, Angular, C#, Docker, Firebase, GitLab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind
         </div>
       </article>
 
@@ -546,13 +593,13 @@
           <li>Designed and implemented projects across multiple domains and technologies.</li>
         </ul>
         <div class="tools">
-          <span class="tools-label">Tools &amp; technologies</span> · Angular, Docker, Firebase, GitHub, GCP, JavaScript, MongoDB, PHP, MySQL, Tailwind
+          <span class="tools-label">Tools</span> · Angular, Docker, Firebase, GitHub, GCP, JavaScript, MongoDB, PHP, MySQL, Tailwind
         </div>
       </article>
     </section>
 
     <section aria-labelledby="education">
-      <h2 id="education">Education</h2>
+      <h2 id="education" data-num="02">Education</h2>
       <div class="education-item">
         <div class="education-degree">
           BSc. (Hons) Computer Science <span class="at" style="color: var(--ink-muted); font-weight: 400;">·</span> <span class="school">University of Pretoria</span>
