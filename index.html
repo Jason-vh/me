@@ -262,20 +262,14 @@
     .contact {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem 1.25rem;
+      align-items: center;
+      gap: 0.4rem 1rem;
       margin-top: 1.75rem;
       font-size: 0.85rem;
       color: var(--ink-soft);
     }
 
-    .contact > * {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .contact > * + *::before {
-      content: '·';
+    .contact .sep {
       color: var(--accent);
       font-weight: 700;
     }
@@ -457,8 +451,11 @@
       </p>
       <div class="contact">
         <a href="mailto:jason@vhattum.com">jason@vhattum.com</a>
+        <span class="sep" aria-hidden="true">·</span>
         <a href="https://www.linkedin.com/in/jason-van-hattum-941951102/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="sep" aria-hidden="true">·</span>
         <a href="https://github.com/Jason-vh" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep" aria-hidden="true">·</span>
         <span>Netherlands</span>
       </div>
       <div class="header-actions">

@@ -15,13 +15,13 @@
 )
 
 #set text(
-  font: ("Helvetica Neue", "Inter"),
+  font: ("Helvetica Neue"),
   size: 11pt,
   fill: ink,
   lang: "en",
 )
 
-#set par(leading: 0.6em, justify: false)
+#set par(justify: false)
 
 #let bullet-mark = text(fill: ink, size: 9pt)[❖]
 
@@ -36,14 +36,6 @@
   block(below: 6mm)[#body]
 }
 
-#let section-heading(label) = {
-  v(3mm)
-  align(center)[
-    #text(size: 16pt, weight: "bold", fill: accent)[#label]
-  ]
-  v(2mm)
-}
-
 #let role(titles, company, dates, bullets: (), tech: none) = {
   // titles and dates can be a string OR an array (for stacked rows like Sendcloud)
   let title-content = if type(titles) == array {
@@ -51,6 +43,7 @@
   } else {
     text(weight: "bold", size: 11pt)[#titles]
   }
+  
   let date-content = if type(dates) == array {
     stack(spacing: 1mm, ..dates.map(d => text(style: "italic", size: 10pt)[#d]))
   } else {
@@ -96,13 +89,17 @@
 
 // ---------- content ----------
 
-#title("Jason van Hattum")
+#align(center)[
+  #text(size: 22pt, weight: "bold", fill: accent)[Jason van Hattum]
+]
 
 #intro[
   Hi! I'm a highly motivated, outcome-driven engineer with a healthy balance of soft skills and full-stack development. I have experience leading and driving large, cross-team projects, solving dependencies, breaking silos and growing engineers.
 ]
 
-#section-heading("Work Experience")
+#align(center)[
+  #text(size: 16pt, weight: "bold", fill: accent)[Work Experience]
+]
 
 #role(
   "Software Engineer",
@@ -176,5 +173,8 @@
   tech: [Angular, Docker, Firebase, GitHub, GCP, JavaScript, MongoDB, PHP, MySQL, Tailwind],
 )
 
-#section-heading("Education")
+#align(center)[
+  #text(size: 16pt, weight: "bold", fill: accent)[Education]
+]
+
 #education-item[BSc. (Hons) Computer Science, University of Pretoria, 2015 - 2018]
