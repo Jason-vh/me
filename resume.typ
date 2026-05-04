@@ -15,7 +15,7 @@
 )
 
 #set text(
-  font: "Inter",
+  font: ("Helvetica Neue", "Inter"),
   size: 11pt,
   fill: ink,
   lang: "en",
@@ -27,7 +27,7 @@
 
 #let title(name) = {
   align(center)[
-    #text(font: "Inter", size: 20pt, weight: "bold", fill: accent)[#name]
+    #text(size: 22pt, weight: "bold", fill: accent)[#name]
   ]
   v(2mm)
 }
@@ -39,7 +39,7 @@
 #let section-heading(label) = {
   v(3mm)
   align(center)[
-    #text(font: "Inter", size: 14pt, weight: "bold", fill: accent)[#label]
+    #text(size: 16pt, weight: "bold", fill: accent)[#label]
   ]
   v(2mm)
 }
@@ -75,7 +75,7 @@
         [#v(0.1em) #bullet-mark],
         [#b],
       )
-      #v(1mm, weak: true)
+      #v(2mm)
     ]
     #if tech != none [
       #v(2.5mm)
