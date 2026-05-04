@@ -108,6 +108,13 @@
   "Software Engineer",
   "FareHarbor",
   "May 2025 - present",
+  bullets: (
+    [Travelled to Hawaii to provide on-site support to clients, bridging engineering and the day-to-day reality.],
+    [Proposed and introduced continuous deployment, reducing feedback loops.],
+    [Drove adoption of AI-powered tooling and product features across the team.],
+    [Implemented customer-facing features in collaboration with product, design, and adjacent engineering teams.],
+  ),
+  tech: [Python, FastAPI, TypeScript, Vue, Postgres, GitLab, OpenAI, Codex, Claude],
 )
 
 #role(
