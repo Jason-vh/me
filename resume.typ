@@ -105,6 +105,12 @@
 #section-heading("Work Experience")
 
 #role(
+  "Software Engineer",
+  "FareHarbor",
+  "May 2025 - present",
+)
+
+#role(
   ("Staff Engineer", "Software Engineer"),
   "Sendcloud",
   ("Aug 2024 - Mar 2025", "Aug 2022 - Aug 2024"),
