@@ -1,8 +1,10 @@
 // Compile with: typst compile --font-path fonts resume.typ jason-van-hattum.pdf
 
-#let accent = rgb("#e8552b")
+#let accent = rgb("#c4421e")
 #let ink = rgb("#1a1714")
-#let rule = rgb("#bbbbbb")
+#let ink-soft = rgb("#4a4137")
+#let ink-muted = rgb("#897f72")
+#let rule = rgb("#d8d0c2")
 
 #set document(
   title: "Jason van Hattum - Resume",
@@ -11,95 +13,150 @@
 
 #set page(
   paper: "a4",
-  margin: (top: 18mm, bottom: 18mm, left: 20mm, right: 20mm),
+  margin: (top: 16mm, bottom: 16mm, left: 18mm, right: 18mm),
 )
 
 #set text(
-  font: ("Helvetica Neue"),
-  size: 11pt,
+  font: ("Helvetica Neue", "Inter"),
+  size: 10.25pt,
   fill: ink,
   lang: "en",
 )
 
-#set par(justify: false)
+#set par(leading: 0.6em, justify: false)
 
-#let bullet-mark = text(fill: ink, size: 9pt)[❖]
+// ---------- helpers ----------
 
-#let title(name) = {
-  align(center)[
-    #text(size: 22pt, weight: "bold", fill: accent)[#name]
+#let eyebrow(label) = {
+  set text(size: 8.25pt, weight: "medium", fill: accent, tracking: 1.4pt)
+  block(below: 4mm)[
+    #box(width: 1.4mm, height: 1.4mm, fill: accent, radius: 0.7mm)
+    #h(2mm)
+    #upper(label)
   ]
-  v(2mm)
+}
+
+#let display-name(first, last) = {
+  set text(size: 28pt, weight: "bold", fill: ink)
+  block(below: 4mm, above: 0pt)[
+    #first #h(0.18em) #text(fill: accent)[#last]
+  ]
 }
 
 #let intro(body) = {
-  block(below: 6mm)[#body]
+  set text(size: 10pt, fill: ink-soft)
+  block(below: 4mm)[#body]
 }
 
-#let role(titles, company, dates, bullets: (), tech: none) = {
-  // titles and dates can be a string OR an array (for stacked rows like Sendcloud)
-  let title-content = if type(titles) == array {
-    stack(spacing: 1mm, ..titles.map(t => text(weight: "bold", size: 11pt)[#t]))
-  } else {
-    text(weight: "bold", size: 11pt)[#titles]
-  }
-  
-  let date-content = if type(dates) == array {
-    stack(spacing: 1mm, ..dates.map(d => text(style: "italic", size: 10pt)[#d]))
-  } else {
-    text(style: "italic", size: 10pt)[#dates]
-  }
+#let contact(..items) = {
+  set text(size: 8.75pt, fill: ink-muted)
+  let entries = items.pos()
+  let sep = box[#h(2.5mm) #text(fill: accent, weight: "bold")[·] #h(2.5mm)]
+  block(below: 9mm, entries.intersperse(sep).sum(default: []))
+}
 
-  block(breakable: false)[
+#let section-heading(label) = {
+  set text(size: 7.75pt, weight: "medium", fill: ink-muted, tracking: 1.7pt)
+  block(above: 8mm, below: 5mm)[#upper(label)]
+}
+
+#let role-line(title, company, dates, sub: none) = {
+  block(below: 2mm)[
     #grid(
-      columns: (1fr, 1fr, 1fr),
-      align: (left + horizon, center + horizon, right + horizon),
-      title-content,
-      text(weight: "bold", size: 11pt)[#company],
-      date-content,
+      columns: (1fr, auto),
+      column-gutter: 8mm,
+      align: (left + top, right + top),
+      [
+        #text(size: 11.5pt, weight: "bold")[#title]
+        #text(size: 11.5pt, weight: "regular", fill: ink-muted)[ at ]
+        #text(size: 11.5pt, weight: "bold", fill: accent)[#company]
+      ],
+      [
+        #text(size: 9pt, fill: ink-soft)[#dates]
+        #if sub != none [
+          #linebreak()
+          #v(0.4mm, weak: true)
+          #text(size: 8.5pt, fill: ink-muted)[#sub]
+        ]
+      ],
     )
-    #v(1.5mm, weak: true)
-    #line(length: 100%, stroke: 0.5pt + rule)
-    #v(2mm, weak: true)
-    #for b in bullets [
-      #grid(
-        columns: (5mm, 1fr),
-        align: (left + top, left + top),
-        [#v(0.1em) #bullet-mark],
-        [#b],
-      )
-      #v(2mm)
-    ]
-    #if tech != none [
-      #v(2.5mm)
-      #par[*Tools & technologies*: #tech]
-    ]
   ]
-  v(5mm)
 }
 
-#let education-item(body) = {
-  grid(
-    columns: (5mm, 1fr),
-    align: (left + top, left + top),
-    [#v(0.1em) #bullet-mark],
-    [#body],
-  )
+#let bullet(body) = {
+  block(below: 2.5mm)[
+    #grid(
+      columns: (5mm, 1fr),
+      align: (left + top, left + top),
+      [
+        #v(0.55em)
+        #box(width: 2.2mm)[#line(length: 100%, stroke: 0.9pt + accent)]
+      ],
+      text(size: 10pt, fill: ink-soft)[#body],
+    )
+  ]
+}
+
+#let tools(items) = {
+  v(3mm)
+  block[
+    #line(length: 100%, stroke: (paint: rule, thickness: 0.5pt, dash: "dashed"))
+    #v(2.5mm)
+    #set text(size: 8.5pt, fill: ink-muted)
+    #text(weight: "bold", fill: ink)[Tools]
+    #h(1.5mm) #text(fill: accent, weight: "bold")[·] #h(1.5mm)
+    #items
+  ]
+}
+
+#let role(title, company, dates, sub: none, bullets: (), tech: none) = {
+  v(6mm)
+  line(length: 100%, stroke: 0.5pt + rule)
+  v(6mm)
+  block(breakable: false)[
+    #role-line(title, company, dates, sub: sub)
+    #v(2mm)
+    #for b in bullets [#bullet(b)]
+    #if tech != none [#tools(tech)]
+  ]
+}
+
+#let education-item(degree, school, dates) = {
+  v(6mm)
+  line(length: 100%, stroke: 0.5pt + rule)
+  v(6mm)
+  block[
+    #grid(
+      columns: (1fr, auto),
+      column-gutter: 4mm,
+      align: (left + bottom, right + bottom),
+      [
+        #text(size: 10.5pt, weight: "bold")[#degree]
+        #text(size: 10.5pt, fill: ink-muted)[ · ]
+        #text(size: 10.5pt, weight: "bold", fill: accent)[#school]
+      ],
+      text(size: 9pt, fill: ink-soft)[#dates],
+    )
+  ]
 }
 
 // ---------- content ----------
 
-#align(center)[
-  #text(size: 22pt, weight: "bold", fill: accent)[Jason van Hattum]
-]
-
+#eyebrow("Product Engineer")
+#display-name[Jason][van Hattum]
 #intro[
-  Hi! I'm a highly motivated, outcome-driven engineer with a healthy balance of soft skills and full-stack development. I have experience leading and driving large, cross-team projects, solving dependencies, breaking silos and growing engineers.
+  I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
+  skills and full-stack development. I have experience leading and driving large,
+  cross-team projects, solving dependencies, breaking silos and growing engineers.
 ]
+#contact(
+  link("mailto:jason@vhattum.com")[jason\@vhattum.com],
+  link("https://www.linkedin.com/in/jason-van-hattum-941951102/")[LinkedIn],
+  link("https://github.com/Jason-vh")[GitHub],
+  [Netherlands],
+)
 
-#align(center)[
-  #text(size: 16pt, weight: "bold", fill: accent)[Work Experience]
-]
+#section-heading("Work Experience")
 
 #role(
   "Software Engineer",
@@ -115,9 +172,10 @@
 )
 
 #role(
-  ("Staff Engineer", "Software Engineer"),
+  "Staff Engineer",
   "Sendcloud",
-  ("Aug 2024 - Mar 2025", "Aug 2022 - Aug 2024"),
+  "Aug 2024 - Mar 2025",
+  sub: "Software Engineer · Aug 2022 - Aug 2024",
   bullets: (
     [Led a 200k+ LOC migration to TypeScript across 14 teams, introducing tooling, mentoring engineers and securing stakeholder buy-in.],
     [Planned and initiated the move from Elasticsearch to InfluxDB for 10+ years of analytics data, reducing costs and centralising expertise.],
@@ -160,7 +218,7 @@
   bullets: (
     [Designed and executed greenfield projects end-to-end across a diverse set of technologies while managing clients.],
   ),
-  tech: [Java, Angular, C\#, Docker, Firebase, Gitlab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind],
+  tech: [Java, Angular, C\#, Docker, Firebase, GitLab, GCP, JavaScript, MongoDB, PHP, Swift, Tailwind],
 )
 
 #role(
@@ -173,8 +231,9 @@
   tech: [Angular, Docker, Firebase, GitHub, GCP, JavaScript, MongoDB, PHP, MySQL, Tailwind],
 )
 
-#align(center)[
-  #text(size: 16pt, weight: "bold", fill: accent)[Education]
-]
-
-#education-item[BSc. (Hons) Computer Science, University of Pretoria, 2015 - 2018]
+#section-heading("Education")
+#education-item(
+  "BSc. (Hons) Computer Science",
+  "University of Pretoria",
+  "2015 - 2018",
+)
