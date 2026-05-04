@@ -107,7 +107,7 @@
 #role(
   ("Staff Engineer", "Software Engineer"),
   "Sendcloud",
-  ("Aug 2024 - present", "Aug 2022 - Aug 2024"),
+  ("Aug 2024 - Mar 2025", "Aug 2022 - Aug 2024"),
   bullets: (
     [Led a 200k+ LOC migration to TypeScript across 14 teams, introducing tooling, mentoring engineers and securing stakeholder buy-in.],
     [Planned and initiated the move from Elasticsearch to InfluxDB for 10+ years of analytics data, reducing costs and centralising expertise.],
