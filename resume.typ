@@ -78,7 +78,7 @@
       #v(1mm, weak: true)
     ]
     #if tech != none [
-      #v(1mm, weak: true)
+      #v(2.5mm)
       #par[*Tools & technologies*: #tech]
     ]
   ]
