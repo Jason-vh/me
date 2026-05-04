@@ -330,14 +330,136 @@
     }
 
     @media print {
-      :root { --bg: #fff; --ink: #000; --ink-soft: #222; --ink-muted: #555; --rule: #ddd; }
-      .grain { display: none; }
-      body { font-size: 11pt; }
-      main { padding: 0; max-width: none; }
-      a { color: var(--ink); }
-      section { margin-top: 1.5rem; }
-      .role { padding: 0.75rem 0; break-inside: avoid; }
-      h1 { font-size: 28pt; }
+      @page { size: A4; margin: 14mm 16mm; }
+      @page :first { margin-top: 12mm; }
+
+      :root {
+        --bg: #fff;
+        --ink: #111;
+        --ink-soft: #2a2a2a;
+        --ink-muted: #555;
+        --rule: #c8c8c8;
+        --accent: #c4421e;
+        --accent-deep: #c4421e;
+      }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body { background: #fff !important; }
+      body { font-size: 10.25pt; line-height: 1.4; }
+      .grain { display: none !important; }
+
+      main {
+        padding: 0;
+        max-width: none;
+      }
+
+      header { margin-bottom: 8mm; break-after: avoid-page; }
+
+      h1 {
+        font-size: 26pt;
+        margin-bottom: 2mm;
+        line-height: 1;
+      }
+      h1 em { color: var(--accent); }
+
+      .eyebrow {
+        font-size: 8.5pt;
+        margin-bottom: 3mm;
+        color: var(--accent);
+      }
+      .eyebrow::before { background: var(--accent); }
+
+      .intro {
+        font-size: 10pt;
+        line-height: 1.45;
+        max-width: none;
+        color: var(--ink-soft);
+      }
+
+      h2 {
+        font-size: 9pt;
+        margin: 6mm 0 3mm;
+        color: var(--ink-muted);
+        break-after: avoid-page;
+      }
+
+      section { margin-top: 4mm; }
+      section:first-of-type { margin-top: 6mm; }
+
+      .role {
+        padding: 3mm 0;
+        break-inside: avoid-page;
+        page-break-inside: avoid;
+      }
+
+      .role-head {
+        margin-bottom: 1.5mm;
+        break-after: avoid-page;
+      }
+
+      .role-title {
+        font-size: 11pt;
+        line-height: 1.25;
+      }
+      .role-title .company { color: var(--accent); }
+
+      .role-dates {
+        font-size: 8.75pt;
+        color: var(--ink-muted);
+      }
+      .role-dates .stack {
+        display: block;
+        margin-top: 0.5mm;
+        font-size: 8pt;
+      }
+
+      .bullets { margin: 1.5mm 0 2.5mm; }
+      .bullets li {
+        margin-bottom: 1mm;
+        padding-left: 4mm;
+        line-height: 1.4;
+        break-inside: avoid;
+      }
+      .bullets li::before {
+        top: 4.5pt;
+        width: 2mm;
+        background: var(--accent);
+      }
+
+      .tools {
+        font-size: 8.75pt;
+        line-height: 1.45;
+        padding-top: 1.5mm;
+        color: var(--ink-muted);
+        border-top: 1px dashed var(--rule);
+      }
+      .tools-label { color: var(--ink); font-weight: 600; }
+
+      .education-item {
+        padding: 2.5mm 0;
+        break-inside: avoid;
+      }
+      .education-degree { font-size: 10.5pt; }
+      .education-degree .school { color: var(--accent); }
+      .education-dates { font-size: 9pt; }
+
+      footer {
+        margin-top: 6mm;
+        padding-top: 3mm;
+        font-size: 9pt;
+        color: var(--ink-muted);
+      }
+      footer a { color: var(--accent); }
+
+      a { text-decoration: none; border: 0; }
     }
   </style>
 </head>
