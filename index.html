@@ -22,13 +22,13 @@
       color-scheme: dark;
       --bg: #14110e;
       --bg-soft: #1d1915;
-      --ink: #ebe5dc;
-      --ink-soft: #b8aea0;
-      --ink-muted: #6e6760;
-      --rule: #2a2520;
+      --ink: #f5efe4;
+      --ink-soft: #d8d0c2;
+      --ink-muted: #9a9085;
+      --rule: #3a3530;
       --accent: #e8552b;
       --accent-deep: #ff6a3d;
-      --max: 680px;
+      --max: 880px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,16 +45,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-    }
-
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 100;
-      opacity: 0.18;
-      mix-blend-mode: screen;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     main {
@@ -111,10 +101,9 @@
     }
 
     h2 {
-      display: grid;
-      grid-template-columns: auto auto 1fr;
+      display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1rem;
       font-family: 'Inter', sans-serif;
       font-weight: 500;
       font-size: 0.78rem;
@@ -124,23 +113,12 @@
       margin-bottom: 2.5rem;
     }
 
-    h2::before {
-      content: attr(data-num);
-      font-family: 'Fraunces', Georgia, serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      letter-spacing: 0;
-      color: var(--accent);
-      text-transform: none;
-      font-weight: 400;
-    }
-
     h2::after {
       content: '';
       display: block;
       height: 1px;
+      width: 2rem;
       background: var(--rule);
-      width: 100%;
     }
 
     section {
@@ -166,8 +144,8 @@
 
     .role-title {
       font-family: 'Fraunces', Georgia, serif;
-      font-weight: 600;
-      font-size: 1.3rem;
+      font-weight: 700;
+      font-size: 1.35rem;
       line-height: 1.25;
       letter-spacing: -0.01em;
       color: var(--ink);
@@ -183,8 +161,8 @@
     }
 
     .role-dates {
-      font-size: 0.85rem;
-      color: var(--ink-muted);
+      font-size: 0.9rem;
+      color: var(--ink-soft);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
       font-family: 'Fraunces', Georgia, serif;
@@ -480,8 +458,6 @@
   </style>
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-
   <main>
     <header>
       <div class="eyebrow">Product Engineer</div>
@@ -508,7 +484,7 @@
     </header>
 
     <section aria-labelledby="experience">
-      <h2 id="experience" data-num="01">Work Experience</h2>
+      <h2 id="experience">Work Experience</h2>
 
       <article class="role">
         <div class="role-head">
@@ -599,7 +575,7 @@
     </section>
 
     <section aria-labelledby="education">
-      <h2 id="education" data-num="02">Education</h2>
+      <h2 id="education">Education</h2>
       <div class="education-item">
         <div class="education-degree">
           BSc. (Hons) Computer Science <span class="at" style="color: var(--ink-muted); font-weight: 400;">·</span> <span class="school">University of Pretoria</span>
