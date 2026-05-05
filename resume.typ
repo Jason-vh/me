@@ -1,10 +1,9 @@
-// Compile with: typst compile --font-path fonts resume.typ jason-van-hattum.pdf
-
 #let accent = rgb("#c4421e")
-#let ink = rgb("#1a1714")
-#let ink-soft = rgb("#4a4137")
+#let ink = rgb("#f5efe4")
+#let ink-soft = rgb("#d8d0c2")
 #let ink-muted = rgb("#897f72")
-#let rule = rgb("#d8d0c2")
+#let bg = rgb("#14110e")
+#let rule = rgb("#3a3530")
 
 #set document(
   title: "Jason van Hattum - Resume",
@@ -13,84 +12,39 @@
 
 #set page(
   paper: "a4",
+  fill: bg,
   margin: (top: 16mm, bottom: 16mm, left: 18mm, right: 18mm),
 )
 
 #set text(
-  font: ("Helvetica Neue", "Inter"),
+  font: "Helvetica Neue",
   size: 10.25pt,
-  fill: ink,
+  fill: ink-soft,
   lang: "en",
 )
 
-#set par(leading: 0.6em, justify: false)
-
-// ---------- helpers ----------
-
-#let eyebrow(label) = {
-  set text(size: 8.25pt, weight: "medium", fill: accent, tracking: 1.4pt)
-  block(below: 4mm)[
-    #box(width: 1.4mm, height: 1.4mm, baseline: -1pt, fill: accent, radius: 0.7mm)
-    #h(2mm)
-    #upper(label)
-  ]
-}
-
-#let display-name(first, last) = {
-  set text(size: 28pt, weight: "bold", fill: ink)
-  block(below: 4mm, above: 0pt)[
-    #first #h(0.18em) #text(fill: accent)[#last]
-  ]
-}
-
-#let intro(body) = {
-  set text(size: 10pt, fill: ink-soft)
-  block(below: 4mm)[#body]
-}
-
-#let contact(..items) = {
-  set text(size: 8.75pt, fill: ink-muted)
+#let socials(..items) = {
+  set text(size: 8.75pt, fill: ink-soft)
   let entries = items.pos()
   let sep = box[#h(2.5mm) #text(fill: accent, weight: "bold")[·] #h(2.5mm)]
-  block(below: 9mm, entries.intersperse(sep).sum(default: []))
+  block(entries.intersperse(sep).sum(default: []))
 }
 
-#let section-heading(label) = {
-  set text(size: 7.75pt, weight: "medium", fill: ink-muted, tracking: 1.7pt)
-  block(above: 8mm, below: 5mm)[#upper(label)]
-}
-
-#let role-line(title, company, dates, sub: none) = {
-  block(below: 2mm)[
-    #grid(
-      columns: (1fr, auto),
-      column-gutter: 8mm,
-      align: (left + top, right + top),
-      [
-        #text(size: 11.5pt, weight: "bold")[#title]
-        #text(size: 11.5pt, weight: "regular", fill: ink-muted)[ at ]
-        #text(size: 11.5pt, weight: "bold", fill: accent)[#company]
-      ],
-      [
-        #text(size: 9pt, fill: ink-soft)[#dates]
-        #if sub != none [
-          #linebreak()
-          #v(0.4mm, weak: true)
-          #text(size: 8.5pt, fill: ink-muted)[#sub]
-        ]
-      ],
-    )
-  ]
+#let section(label) = {
+  v(5mm)
+  set text(size: 10pt, weight: "medium", fill: ink-soft, tracking: 2pt)
+  upper(label)
+  v(5mm)
 }
 
 #let bullet(body) = {
-  block(below: 2.5mm)[
+  block(below: 3mm)[
     #grid(
-      columns: (5mm, 1fr),
+      columns: (4mm, 1fr),
       align: (left + top, left + top),
       [
-        #v(0.55em)
-        #box(width: 2.2mm)[#line(length: 100%, stroke: 0.9pt + accent)]
+        #v(0.3em)
+        #box(width: 1.5mm)[#line(length: 100%, stroke: 1pt + accent)]
       ],
       text(size: 10pt, fill: ink-soft)[#body],
     )
@@ -102,19 +56,37 @@
   block[
     #line(length: 100%, stroke: (paint: rule, thickness: 0.5pt, dash: "dashed"))
     #v(2.5mm)
-    #set text(size: 8.5pt, fill: ink-muted)
-    #text(weight: "bold", fill: ink)[Tools]
-    #h(1.5mm) #text(fill: accent, weight: "bold")[·] #h(1.5mm)
+    #set text(size: 8.5pt, fill: ink-soft)
+    #text(weight: "bold", fill: ink-muted)[Tools:]
     #items
   ]
 }
 
 #let role(title, company, dates, sub: none, bullets: (), tech: none) = {
-  v(6mm)
-  line(length: 100%, stroke: 0.5pt + rule)
-  v(6mm)
+  v(1mm)
+  line(length: 100%, stroke: rule)
+  v(3mm)
   block(breakable: false)[
-    #role-line(title, company, dates, sub: sub)
+    #block(below: 2mm)[
+      #grid(
+        columns: (1fr, auto),
+        column-gutter: 8mm,
+        align: (left + top, right + top),
+        [
+          #text(size: 11.5pt, weight: "bold", fill: ink)[#title]
+          #text(size: 11.5pt, weight: "regular", fill: ink-muted)[ at ]
+          #text(size: 11.5pt, weight: "bold", fill: accent)[#company]
+        ],
+        [
+          #text(size: 9pt, fill: ink-soft)[#dates]
+          #if sub != none [
+            #linebreak()
+            #v(3mm, weak: true)
+            #text(size: 9pt, fill: ink-soft)[#sub]
+          ]
+        ],
+      )
+    ]
     #v(2mm)
     #for b in bullets [#bullet(b)]
     #if tech != none [#tools(tech)]
@@ -122,9 +94,8 @@
 }
 
 #let education-item(degree, school, dates) = {
-  v(6mm)
   line(length: 100%, stroke: 0.5pt + rule)
-  v(6mm)
+  v(3mm)
   block[
     #grid(
       columns: (1fr, auto),
@@ -138,25 +109,33 @@
       text(size: 9pt, fill: ink-soft)[#dates],
     )
   ]
+  v(3mm)
+  line(length: 100%, stroke: 0.5pt + rule)
 }
 
-// ---------- content ----------
+#box(width: 1.4mm, height: 1.4mm, baseline: -1pt, fill: accent, radius: 0.7mm)
+#h(2mm)
+#text(size: 8.25pt, fill: accent, tracking: 1.6pt)[#upper("Product Engineer")]
 
-#eyebrow("Product Engineer")
-#display-name[Jason][van Hattum]
-#intro[
-  I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
-  skills and full-stack development. I have experience leading and driving large,
-  cross-team projects, solving dependencies, breaking silos and growing engineers.
-]
-#contact(
+#text(size: 28pt, weight: "bold", fill: ink, tracking: -0.4pt)[Jason]
+#text(size: 28pt, weight: "bold", fill: accent, tracking: -0.4pt)[van Hattum]
+
+#v(3mm)
+
+I'm a highly motivated, outcome-driven engineer with a healthy balance of soft
+skills and full-stack development. I have experience leading and driving large,
+cross-team projects, solving dependencies, breaking silos and growing engineers.
+
+#v(3mm)
+
+#socials(
   link("mailto:jason@vhattum.com")[jason\@vhattum.com],
   link("https://www.linkedin.com/in/jason-van-hattum-941951102/")[LinkedIn],
   link("https://github.com/Jason-vh")[GitHub],
   [Netherlands],
 )
 
-#section-heading("Work Experience")
+#section("Work Experience")
 
 #role(
   "Software Engineer",
@@ -231,7 +210,8 @@
   tech: [Angular, Docker, Firebase, GitHub, GCP, JavaScript, MongoDB, PHP, MySQL, Tailwind],
 )
 
-#section-heading("Education")
+#section("Education")
+
 #education-item(
   "BSc. (Hons) Computer Science",
   "University of Pretoria",
